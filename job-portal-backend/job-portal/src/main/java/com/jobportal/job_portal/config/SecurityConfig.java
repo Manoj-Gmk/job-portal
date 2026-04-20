@@ -32,9 +32,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(List.of(
-    "http://localhost:5173",
-    "https://job-portal-pi-wheat-78.vercel.app"
-));
+                            "http://localhost:5173",
+                            "https://job-portal-pi-wheat-78.vercel.app"));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT",
                             "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
@@ -49,10 +48,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/jobs/search").permitAll()
                         .requestMatchers("/api/jobs/all").permitAll()
                         .requestMatchers("/api/jobs/post").hasRole("RECRUITER")
-                        .requestMatchers("/api/jobs/d        .requestMatchers("/api/applications/**")
+                        .requestMatchers("/api/jobs/delete/**").hasRole("RECRUITER")
+                        .requestMatchers("/api/applications/**")
                         .hasAnyRole("CANDIDATE", "RECRUITER")
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter,
                         UsernamePasswordAuthenticationFilter.class);
 
